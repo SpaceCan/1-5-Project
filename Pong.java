@@ -5,8 +5,9 @@ import java.applet.Applet;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.Graphics;
 
-public class Pong extends Applet implements KeyListener
+public class Pong extends JFrame
 {
     int x = 0;
     int xBall = 250;
@@ -25,42 +26,51 @@ public class Pong extends Applet implements KeyListener
     int Vx = 2;
     int Vy = 1;
     int[] transfer = new int[4];
-    
+    public Pong(){
+        JFrame frame = new JFrame();
+    }
     public void paint(Graphics g)
     {  
+       setFocusable(true);
        I(); 
-
+       JFrame frame = new JFrame();
        while(/*temp*/ x <= 1000){
        
        draw(g);
-       for(int i = 0; i <= 100000000; ++i){;}
+       for(int i = 0; i <= 10000000; ++i){;}
        x += 1;
        }
        
        
     }
     
-    public void I(){addKeyListener(this);}
-    public void keyPressed(KeyEvent e){
-        //e.getKeyChar()
-        if (e.getKeyCode() == KeyEvent.VK_UP)
-            {
-                x1Paddle2 += 1;
-                x2Paddle2 += 1;   
+    public void I(){addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    x1Paddle1 += 1;
+                    x2Paddle1 += 1;
+                    
+                    break;
+                case KeyEvent.VK_S:
+                    x1Paddle1 -= 1;
+                    x2Paddle1 -= 1;
+                    break;
+                case KeyEvent.VK_UP:
+                    x1Paddle2 += 1;
+                    x2Paddle2 += 1;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    x1Paddle2 -= 1;
+                    x2Paddle2 -= 1;
+                    break;
+
                 }
-          else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-                x1Paddle2 -= 1;
-                  x2Paddle2 -= 1;
             }
-           if (e.getKeyCode() == KeyEvent.VK_W){
-                x1Paddle1 += 1;
-                x2Paddle1 += 1;
-            }
-              else if (e.getKeyCode() == KeyEvent.VK_D){
-                x1Paddle1 -= 1;
-                x2Paddle1 -= 1;
-                }       
-            }  
+        });
+    }
     public void keyReleased(KeyEvent e){}
     public void keyTyped(KeyEvent e){}
     
