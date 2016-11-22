@@ -1,0 +1,26 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+import java.awt.Graphics;
+
+public class main {
+    public static void main(String args[])
+    {
+        Pong pong1 = new Pong();
+        JFrame frame = new JFrame("Pong");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.getContentPane().setSize(800,400);
+        frame.setPreferredSize(new Dimension(400,800));
+        frame.setVisible(true);
+        
+    }
+    
+    
+    
+    
+}
