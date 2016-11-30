@@ -1,3 +1,9 @@
+/*
+
+
+
+*/
+//importing literally all the functions 
 import java.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,6 +18,7 @@ public class BlackJack{
         int playerTie = 0;
     
     public static void BlackJackGame(BlackJack blackJack){
+        //declare variables
         int output = 0;
         int draw;
         int x = 0;
@@ -27,46 +34,47 @@ public class BlackJack{
         System.out.println("This is blackjack, don't go over 21, ace is a 1, face cards are 10");
         
         String yn = "y";
-        
-    
-        while (yn.equals("y")){
+       
+        //computer's turn
+        while(yn.equals("y")){
             comp = blackJack.initialDraw(rand);
             while(comp < 17){
             comp += blackJack.draw(rand);
             }
-            player += blackJack.initialDraw(rand);
-            System.out.println("You now have " + player);
-            System.out.println("Draw again, y/n");
-            yn = scnr.nextLine();
-            
-            while (yn.equals("y")){
+        //player first turn
+        player += blackJack.initialDraw(rand);
+        System.out.println("You now have " + player);
+        System.out.println("Draw again, y/n");
+        yn = scnr.nextLine();
+
+        while(yn.equals("y")){
                 player += blackJack.draw(rand);
                 System.out.println("You now have " + player);
                 System.out.println("Draw again, y/n");
                 yn = scnr.nextLine();
             }
         
-    
-            if (player > 21){
+            //win conditions
+            if(player > 21){
                 compwin = 1;}
-            if (comp > 21){
+            if(comp > 21){
                     playerwin = 1;}
-            if (playerwin == 1 && player <= 21){
+            if(playerwin == 1 && player <= 21){
                         System.out.println("You Win");}
-            if (compwin == 1 && comp <= 21){
+            if(compwin == 1 && comp <= 21){
                             System.out.println("You lose");}
-            if (compwin == 1 && playerwin == 1){
+            if(compwin == 1 && playerwin == 1){
                                 compTie = comp - 21;
                                 playerTie = player - 21;}
-            if (compTie < playerTie){
+            if(compTie < playerTie){
                                     System.out.println("You Lose");}
-            if (playerTie < compTie){
+            if(playerTie < compTie){
                                         System.out.println("You win");}
-            if (playerTie == compTie){
+            if(playerTie == compTie){
                                             System.out.println("You lose");}
-            if (player > comp && playerwin == 0 && compwin == 0){
+            if(player > comp && playerwin == 0 && compwin == 0){
                                                 System.out.println("You Win");}
-            if (comp > player && playerwin == 0 && compwin == 0){
+            if(comp > player && playerwin == 0 && compwin == 0){
                                                     System.out.println("The computer wins");}
 
          
@@ -76,6 +84,7 @@ public class BlackJack{
                                                 }
         System.out.println("Goodbye!");
      }
+     //create draw number
      public int draw(Random rand){
         output = 0;
         draw = rand.nextInt(10) + 1;
@@ -83,6 +92,7 @@ public class BlackJack{
         return output;   
         
     }
+    //create first draw
     public int initialDraw(Random rand){
         int x = 0;
         output = 0;
