@@ -1,0 +1,219 @@
+import java.util.Scanner;
+
+public class NaughtsAndCrosses { //Class 
+
+   public static final int empty = 0; //Sets empty variable
+   
+   public static final int x = 1; //x Variable
+   
+   public static final int o = 2; //Naught Variable
+ 
+   public static final int play = 0; //Curent state of play
+   
+   public static final int tie = 1; //Neither Player Wins Variable
+   
+   public static final int xWon = 2; //x won Game
+   
+   public static final int oWon = 3; //Naughts won Game
+ 
+
+   public static final int rows = 3, columns = 3; //rows Columns and rows
+   
+   public static int[][] Grid = new int[rows][columns]; 
+                                                     
+   public static int currentState; //Sets Current state of Grid 
+                                    
+   public static int currentPlayer; //Player Turn 
+   
+   public static int currntRow, currentCol; //Row 
+ 
+   public static Scanner in = new Scanner(System.in); 
+ 
+   public static void main(String[] args) {
+       
+      System.out.println("Hi Player, enter the row, followed by a space, then enter the column.");
+      
+      initGame();
+
+      do {
+          
+         playerMove(currentPlayer);//Initiates the player's move
+         
+         updateGame(currentPlayer, currntRow, currentCol);
+         
+         printGrid(); //Creates Game endings
+         
+         if (currentState == xWon) {
+             
+            System.out.println("xes won! Bye!");//Declares to user winner
+            
+         } else if (currentState == oWon) {
+             
+            System.out.println("Naughts won! Bye!");//Declares to user winner
+            
+         } else if (currentState == tie) {
+             
+            System.out.println("It's a tie! Bye!");//Declares to user winner
+            
+         }
+
+         currentPlayer = (currentPlayer == x) ? o : x;
+         
+      } while (currentState == play);//Sets play while true
+   }
+ 
+   public static void initGame() { //Makes Grid at start empty and sets first player
+       
+      for (int row = 0; row < rows; ++row) {
+          
+         for (int col = 0; col < columns; ++col) {
+             
+            Grid[row][col] = empty; 
+            
+         }
+      }
+      
+      currentState = play; 
+      
+      currentPlayer = x;  
+   }
+ 
+   public static void playerMove(int start) {
+       
+      boolean validInput = false; 
+      
+      do {
+         if (start == x) {
+             
+            System.out.print("Player 'X', enter your move (row[1-3] column[1-3]): ");//Instructions 
+            
+         } else {
+             
+            System.out.print("Player 'O', enter your move (row[1-3] column[1-3]): "); //Instructions 
+         }
+         
+         int row = in.nextInt()-1;
+         
+         int col = in.nextInt()-1;
+         
+         if (row >= 0 && row < rows && col >= 0 && col < columns && Grid[row][col] == empty) { //Sets condition for grid.
+             
+            currntRow = row;
+            
+            currentCol = col;
+            
+            Grid[currntRow][currentCol] = start; 
+            
+            validInput = true; 
+            
+         } else {
+              
+            System.out.println("This move at (" + (row + 1) + "," + (col + 1)
+            
+            
+                  + ") is not valid. Please Try again."); //Instructions for if move is invalid
+         }
+         
+      } 
+      while (!validInput); 
+   }
+   
+   public static boolean istie() {
+           
+      for (int row = 0; row < rows; ++row) {
+              
+         for (int col = 0; col < columns; ++col) {
+                 
+             if (Grid[row][col] == empty) {
+                    
+               return false;
+                   
+                }
+                
+             }
+             
+          }
+          
+          return true;  
+          
+       }
+       
+   public static void updateGame(int start, int currentRow, int currentCol) {//Starts 
+       
+      if (haswon(start, currentRow, currentCol)) {  
+          
+         currentState = (start == x) ? xWon : oWon; //Chooses who's won
+         
+      } else if (istie()) { //Set's tie variable
+          
+         currentState = tie; 
+      }
+   }
+ 
+   public static boolean haswon(int start, int currentRow, int currentCol) { //Sets conditions for turns
+       
+      return (Grid[currentRow][0] == start        
+      
+                   && Grid[currentRow][1] == start
+                   
+                   && Grid[currentRow][2] == start
+                   
+              || Grid[0][currentCol] == start      
+              
+                   && Grid[1][currentCol] == start
+                   
+                   && Grid[2][currentCol] == start
+                   
+              || currentRow == currentCol       
+              
+                   && Grid[0][0] == start
+                   
+                   && Grid[1][1] == start
+                   
+                   && Grid[2][2] == start
+                   
+              || currentRow + currentCol == 2  
+              
+                   && Grid[0][2] == start
+                   
+                   && Grid[1][1] == start
+                   
+                   && Grid[2][0] == start);
+   }
+
+   public static void printGrid() { //Makes Grid for Grid
+       
+      for (int row = 0; row < rows; ++row) {
+          
+         for (int col = 0; col < columns; ++col) {
+             
+            printGrid(Grid[row][col]); //Prints Grid
+            
+            if (col != columns - 1) {
+                
+               System.out.print("|"); //Formats column line
+               
+            }
+         }
+         System.out.println();
+         
+         if (row != rows - 1) { 
+             
+            System.out.println("-----------"); //Formats line for grid
+         }
+      }
+      System.out.println();
+   }
+ 
+   public static void printGrid(int content) { //Places X/O in grid
+       
+      switch (content) {
+          
+         case empty:  System.out.print("   "); break;
+         
+         case o: System.out.print(" O "); break;
+         
+         case x:  System.out.print(" X "); break;
+      }
+   }
+}
